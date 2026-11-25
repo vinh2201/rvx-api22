@@ -8,9 +8,19 @@ pluginManagement {
         maven {
             name = "githubPackages"
             url = uri("https://maven.pkg.github.com/revanced/revanced-patches-gradle-plugin")
+            // GitHub Packages needs a token that can read packages of *another* owner (revanced).
+            // The default GITHUB_TOKEN of a fork usually cannot, so a classic PAT with `read:packages` is preferred:
+            //   - CI:    ORG_GRADLE_PROJECT_githubPackagesUsername / ORG_GRADLE_PROJECT_githubPackagesPassword
+            //   - local: githubPackagesUsername / githubPackagesPassword in ~/.gradle/gradle.properties
             credentials {
-                username = providers.gradleProperty("gpr.user").getOrElse(System.getenv("GITHUB_ACTOR"))
-                password = providers.gradleProperty("gpr.key").getOrElse(System.getenv("GITHUB_TOKEN"))
+                username = providers.gradleProperty("githubPackagesUsername")
+                    .orElse(providers.gradleProperty("gpr.user"))
+                    .orElse(providers.environmentVariable("GITHUB_ACTOR"))
+                    .orNull
+                password = providers.gradleProperty("githubPackagesPassword")
+                    .orElse(providers.gradleProperty("gpr.key"))
+                    .orElse(providers.environmentVariable("GITHUB_TOKEN"))
+                    .orNull
             }
         }
         // TODO: Remove once https://github.com/google/protobuf-gradle-plugin/pull/797 is merged.

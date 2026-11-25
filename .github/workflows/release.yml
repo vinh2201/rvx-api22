@@ -36,6 +36,9 @@ jobs:
       - name: Build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ORG_GRADLE_PROJECT_githubPackagesUsername: ${{ github.repository_owner }}
+          # Classic PAT with `read:packages`, stored as repository secret GPR_TOKEN.
+          ORG_GRADLE_PROJECT_githubPackagesPassword: ${{ secrets.GPR_TOKEN || secrets.GITHUB_TOKEN }}
         # Patcher v22: patch metadata is produced by the app.revanced.patches Gradle plugin,
         # the old `generatePatchesFiles` (JsonGenerator) task no longer exists.
         run: ./gradlew clean :patches:buildAndroid
