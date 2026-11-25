@@ -4,6 +4,19 @@ plugins {
     alias(libs.plugins.protobuf)
 }
 
+// J2V8 is only published on JitPack. The repositories are listed explicitly because declaring a repository
+// in a project makes Gradle ignore the ones inherited from the settings (PREFER_PROJECT).
+repositories {
+    google()
+    mavenCentral()
+    maven {
+        url = uri("https://jitpack.io")
+        content {
+            includeGroup("com.github.ynab")
+        }
+    }
+}
+
 android {
     namespace = "app.revanced.extension"
     compileSdk = 35

@@ -217,6 +217,20 @@ class LegacyFingerprint internal constructor(
     context(_: BytecodePatchContext)
     val classDefOrNull: MutableClassDef?
         get() = matchOrNull()?.classDef
+
+    // Patcher v21 `Fingerprint` parity: these throw when the fingerprint can not be resolved.
+
+    context(_: BytecodePatchContext)
+    val method: MutableMethod
+        get() = methodOrNull ?: throw PatchException("Failed to resolve fingerprint")
+
+    context(_: BytecodePatchContext)
+    val originalMethod: Method
+        get() = originalMethodOrNull ?: throw PatchException("Failed to resolve fingerprint")
+
+    context(_: BytecodePatchContext)
+    val classDef: MutableClassDef
+        get() = classDefOrNull ?: throw PatchException("Failed to resolve fingerprint")
 }
 
 private val String.exception
