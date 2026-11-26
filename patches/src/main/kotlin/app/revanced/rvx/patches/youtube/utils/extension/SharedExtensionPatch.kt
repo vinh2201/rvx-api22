@@ -1,0 +1,9 @@
+package app.revanced.rvx.patches.youtube.utils.extension
+
+import app.revanced.rvx.patches.shared.extension.sharedExtensionPatch
+import app.revanced.rvx.patches.youtube.utils.extension.hooks.applicationInitHook
+
+// TODO: Move this to a "Hook.kt" file. Same for other extension hook patches.
+val sharedExtensionPatch = sharedExtensionPatch(
+    applicationInitHook,
+)

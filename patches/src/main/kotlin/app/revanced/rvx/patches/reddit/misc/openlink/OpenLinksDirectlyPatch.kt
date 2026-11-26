@@ -1,0 +1,41 @@
+package app.revanced.rvx.patches.reddit.misc.openlink
+
+import app.revanced.patcher.extensions.addInstructions
+import app.revanced.patcher.patch.bytecodePatch
+import app.revanced.rvx.patches.reddit.utils.compatibility.Constants.COMPATIBLE_PACKAGE
+import app.revanced.rvx.patches.reddit.utils.extension.Constants.PATCHES_PATH
+import app.revanced.rvx.patches.reddit.utils.patch.PatchList.OPEN_LINKS_DIRECTLY
+import app.revanced.rvx.patches.reddit.utils.settings.settingsPatch
+import app.revanced.rvx.patches.reddit.utils.settings.updatePatchStatus
+
+private const val EXTENSION_METHOD_DESCRIPTOR =
+    "$PATCHES_PATH/OpenLinksDirectlyPatch;" +
+            "->" +
+            "parseRedirectUri(Landroid/net/Uri;)Landroid/net/Uri;"
+
+@Suppress("unused")
+val openLinksDirectlyPatch = bytecodePatch(
+    OPEN_LINKS_DIRECTLY.patchName,
+    OPEN_LINKS_DIRECTLY.summary,
+) {
+    compatibleWith(COMPATIBLE_PACKAGE)
+
+    dependsOn(
+        settingsPatch,
+        screenNavigatorMethodResolverPatch
+    )
+
+    apply {
+        screenNavigatorMethod.addInstructions(
+            0, """
+                invoke-static {p2}, $EXTENSION_METHOD_DESCRIPTOR
+                move-result-object p2
+                """
+        )
+
+        updatePatchStatus(
+            "enableOpenLinksDirectly",
+            OPEN_LINKS_DIRECTLY
+        )
+    }
+}

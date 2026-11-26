@@ -4,7 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Random;
 
-import app.revanced.extension.shared.utils.Logger;
+import app.revanced.rvx.extension.shared.utils.Logger;
 
 public final class Helpers {
     private static Random sRandom;

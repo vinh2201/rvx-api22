@@ -42,7 +42,7 @@ plugins {
 
 settings {
     extensions {
-        defaultNamespace = "app.revanced.extension"
+        defaultNamespace = "app.revanced.rvx.extension"
 
         // Must resolve to an absolute path (not relative),
         // otherwise the extensions in subfolders will fail to find the proguard config.

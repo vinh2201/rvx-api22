@@ -1,0 +1,12 @@
+package app.revanced.rvx.extension.youtube.patches.general;
+
+public final class YouTubeIcon {
+    /**
+     * Injection point.
+     */
+    public static Enum<?> search;
+    /**
+     * Injection point.
+     */
+    public static Enum<?> searchCairo;
+}

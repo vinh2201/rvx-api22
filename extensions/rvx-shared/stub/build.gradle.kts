@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "app.revanced.extension"
+    namespace = "app.revanced.rvx.extension"
     compileSdk = 35
 
     defaultConfig {
